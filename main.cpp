@@ -6,7 +6,7 @@
 #include "input.h"
 using namespace std;
 
-//void advancedBinaryFile();
+void advancedBinaryFile();
 //void dynamicArray();
 //void vector();
 //void xtraCredit();
@@ -85,11 +85,54 @@ int main()
 
 }
 
+struct Element
+{
+    char symbol[3] = "un";
+    char name[25] = "unk";
+    float mass = 0.0;
+    char state = 'x';
+    short groupNum = 0;
+    short periodNum = 0;
+    short blockType = 0;
+    float meltingPt = 0;
+    float boilPt = 0;
+    short discoveryYr = 0;
+    char scientist[100] = "unk";
+};
+
+
+
 void advancedBinaryFile()
 {
     do 
     {
-
         system("cls");
+        cout << "\n\n\t" << string(80, char(205));
+        cout << "\n\tOption: Advanced Binary File Menu";
+        cout << "\n\t" << string(80, char(205));
+        cout << "\n\t 1. Retrieve and display ALL the element(s) from a binary data file";
+        cout << "\n\t 2. Add a new element to the binary data file";
+        cout << "\n\t 3. Update an existing element from the binary data file";
+        cout << "\n\t 4. Search for an element by atomic # from the binary data file";
+        cout << "\n\t" << string(80, char(196));
+        cout << "\n\t 0. Return to main menu";
+        cout << "\n\t" << string(80, char(205));
+
+        switch (inputInteger("\n\tOption: ", 0, 20))
+        {
+        case 0: main();
+        //case 1: readFile();
+            break;
+        //case 2: addElem(); 
+            break;
+        //case 3: updateElem(); 
+            break;
+        //case 4: searchElem(); 
+            break;
+        }
+
+        cout << "\n\n";
+        system("pause");
+        
     } while (true);
 }
