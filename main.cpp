@@ -31,13 +31,7 @@ int main()
 
 
         //Space for Periodic Table
-
         cout << "\n\t" << char(201);
-        /*while (j < 160)
-        {
-            cout << char(205);
-            j++;
-        }*/
         cout << string(160, char(205));
         cout << char(187);
         cout << "\n\t" << char(186) << "                                       Periodic Table of Elements by Atomic Number & Symbol(colors 5 pts Xtra credits)                                          " << char(186);
@@ -52,13 +46,6 @@ int main()
         cout << "\n\t" << char(186) << "                               " << char(179) << char(192) << "[ 58-Ce][ 59-Pr][ 60-Nd][ 61-Pm][ 62-Sm][ 63-Eu][ 64-Gd][ 65-Tb][ 66-Dy][ 67-Ho][ 68-Er][ 69-Tm][ 70-Yb][ 71-Lu]               " << char(186);
         cout << "\n\t" << char(186) << "                               " << char(192) << "[ 90-Th][ 91-Pa][ 92-U ][ 93-Np][ 94-Pu][ 95-Am][ 96-Cm][ 97-Bk][ 98-Cf][ 99-Es][100-Fm][101-Md][102-No][103-Lr]                " << char(186);
         cout << "\n\t" << char(200);
-
-        /*j = 0;
-        while (j < 160)
-        {
-            cout << char(205);
-            j++;
-        }*/
         cout << string(160, char(205));
         cout << char(188);
 
@@ -198,21 +185,7 @@ Element* fileToArray(string filename, Element* array, int& size)
         {
             //increments size to keep up with index 
             size++;
-
-            /*cout << "\n\tIndex[" << i << "]";
-            cout << "\n\tAtomic #: " << array[i].atomicNum;
-            cout << "\n\tSymbol: " << array[i].symbol;
-            cout << "\n\tName: " << array[i].name;
-            cout << "\n\tState of matter: " << array[i].state;
-            cout << "\n\tGroup #: " << array[i].groupNum;
-            cout << "\n\tPeriod #: " << array[i].periodNum;
-            cout << "\n\tBlock type: " << array[i].blockType;
-            cout << "\n\tMelting point: " << array[i].meltingPt;
-            cout << "\n\tBoiling Point: " << array[i].boilPt;
-            cout << "\n\tDiscovery year: " << array[i].discoveryYr;
-            cout << "\n\tDiscovered by: " << array[i].scientist;
-            cout << "\n\n";*/
-    
+            
             //expands array by one element
             array = arrayExpander(array, size);
 
