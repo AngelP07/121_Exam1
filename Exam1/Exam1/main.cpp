@@ -454,61 +454,61 @@ Element* updateElem(Element* array, int& size)
 }
 
 //precondition  : takes in two Element objects
-//postcondition : compares the symbols of each element and returns true if the first symbol is greater(alphabeticaly) than the other
+//postcondition : compares the symbols of each element and returns true if the first symbol is less(alphabeticaly) than the other
 bool compareSymbol(Element element1,Element element2) 
 {
     //convert the c_strings to strings to be able to use logical arguement: >
-    if (string(element1.symbol) > string(element2.symbol))
+    if (string(element1.symbol) < string(element2.symbol))
         return true;
     else
         return false;
 }
 
 //precondition  : takes in Element ptr and int& as arguments
-//postcondition : sorts the array by symbol in descending order
+//postcondition : sorts the array by symbol in acscending order
 Element* arrSort(Element* array, int& size)
 {
-    //sort function
-    sort(array, array + size, compareSymbol);
-    cout << "\n\tArray has been sorted in descending order";
+    if (array == nullptr)
+        cout << "\n\tError: Dynamic array is empty. No info can be displayed.";
+    else
+    {
+        //sort function
+        sort(array, array + size, compareSymbol);
+        cout << "\n\tArray has been sorted in descending order";
+    }
     return array;
 }
 
-
-//TROUBLE FINISHING BINARY SEARCH
-//BINARY SEARCH NOT WORKING
+//precondition  : takes in Element, int, and c_string as arguments
+//postcondition : searches the sorted array
 int binarySearch(Element* array, int size, char* symbol)
 {
     int left = 0;
     int right = size - 1;
 
-    // Loop to implement Binary Search 
-    while (left <= right) {
+    
+    if (array == nullptr)
+        return -2;
+    else
+    {
+        // Loop to implement Binary Search 
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int cmp = strcmp(array[mid].symbol, symbol);
 
-        // Calculatiing mid 
-        int m = left + (right - left) / 2;
+            if (cmp == 0) {
+                return mid; // Found
+            }
+            else if (cmp < 0) {
+                left = mid + 1; // Target is in the left half
+            }
+            else {
+                right = mid - 1; // Target is in the right half
+            }
+        }
 
-        // Some random value assigned 
-        // as 0 belongs to index 
-        int res = -1000;
-
-        if (symbol == (array[m].symbol))
-            res = 0;
-
-        // Check if x is present at mid 
-        if (res == 0)
-            return m;
-
-        // If x greater, ignore left half 
-        if (symbol > (array[m].symbol))
-            left = m + 1;
-
-        // If x is smaller, ignore right half 
-        else
-            right = m - 1;
+        return -1;
     }
-
-    return -1;
 }
 
 //precondition  : takes in string, Element ptr, and int& arguements
@@ -553,7 +553,7 @@ void dynamicArray()
         cout << "\n\t 2. Display element(s) from the dynamic array";
         cout << "\n\t 3. Add a new chemistry element into the dynamic array";
         cout << "\n\t 4. Update an existing chemistry element from the dynamic array";
-        cout << "\n\t 5. Sort the dynamic array by Symbol in descending order";
+        cout << "\n\t 5. Sort the dynamic array by Symbol in ascending order";
         cout << "\n\t 6. Binary search an element by Symbol";
         cout << "\n\t 7. Write elements from the dynamic array to the binary data file.";
         cout << "\n\t" << string(80, char(196));
@@ -603,10 +603,12 @@ void dynamicArray()
             cout << "\n\t" << string(80, char(205));
             strncpy_s(sym, inputString("\n\tSymbol :", false).c_str(), sizeof(sym) - 1);
             result = binarySearch(array, numElements, sym);
-            if (result == -1)
-                cout << ("Element not present");
+            if (result == -2)
+                cout << "\n\tError: Dynamic array is empty. No info can be displayed.";
+            else if (result == -1)
+                cout << "\n\tElement (" << sym << ") not present in array";
             else
-                cout << ("Element found at index ") << result;
+                cout << "\n\tElement (" << sym <<  ") found at index " << result << ".";
             break;
         case 7: 
             system("cls");
