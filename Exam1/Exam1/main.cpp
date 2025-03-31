@@ -16,7 +16,6 @@ void dynamicArray();
 void vectorOption();
 
 
-
 struct Element
 {
     short atomicNum = 0;
@@ -32,6 +31,11 @@ struct Element
     short discoveryYr = 0;
     char scientist[100] = "unk";
 };
+
+//Input/Output Validation prototypes
+void printBlockType(char blockType);
+void printState(char state);
+void printTemp(float degreeCelsius);
 
 //Dynamic Array Prototypes
 Element* arrayExpander(Element* array, int& size);
@@ -322,12 +326,12 @@ void displayArray(Element* array, int size)
             cout << "\n\tSymbol          : " << array[i].symbol;
             cout << "\n\tName            : " << array[i].name;
             cout << "\n\tMass            : " << array[i].mass << "u";
-            cout << "\n\tState of matter : " << array[i].state;
+            cout << "\n\tState of matter : ";  printState(array[i].state);
             cout << "\n\tGroup #         : " << array[i].groupNum;
             cout << "\n\tPeriod #        : " << array[i].periodNum;
-            cout << "\n\tBlock type      : " << array[i].blockType;
-            cout << "\n\tMelting point   : " << array[i].meltingPt;
-            cout << "\n\tBoiling Point   : " << array[i].boilPt;
+            cout << "\n\tBlock type      : ";  printBlockType(array[i].blockType);
+            cout << "\n\tMelting point   : ";  printTemp(array[i].meltingPt);
+            cout << "\n\tBoiling Point   : ";  printTemp(array[i].boilPt);
             cout << "\n\tDiscovery year  : " << array[i].discoveryYr;
             cout << "\n\tDiscovered by   : " << array[i].scientist;
             cout << "\n\n";
@@ -359,13 +363,13 @@ Element* addElem(Element* array, int& size)
     strncpy_s(array[size - 1].symbol, inputString("\n\tSymbol :", false).c_str(), sizeof(array[size - 1].symbol) - 1);
 
     //asks for new element's name
-    strncpy_s(array[size - 1].name, inputString("\n\tName :", false).c_str(), sizeof(array[size - 1].name) - 1);
+    strncpy_s(array[size - 1].name, inputString("\n\tName :", true).c_str(), sizeof(array[size - 1].name) - 1);
 
     //asks for new element's mass
     array[size - 1].mass = inputDouble("\n\tMass: ", true);
 
     //asks for new element's state of matter
-    array[size - 1].state = toupper(inputChar("\n\tState of matter: "));
+    array[size - 1].state = toupper(inputChar("\n\tState of matter: ", 'SLG'));
 
     //asks for new element's group number
     array[size - 1].groupNum = inputInteger("\n\tGroup # :", true);
@@ -374,7 +378,7 @@ Element* addElem(Element* array, int& size)
     array[size - 1].periodNum = inputInteger("\n\tPeriod # :", true);
 
     //asks for new element's block type
-    array[size - 1].blockType = toupper(inputChar("\n\tBlock Type: "));
+    array[size - 1].blockType = toupper(inputChar("\n\tBlock Type(S-sharp, P-principal, D-diffuse, or F-fundamental): ", 'SPDF'));
 
     //asks for new element's melting point
     array[size - 1].meltingPt = inputDouble("\n\tMelting point: ");
@@ -384,10 +388,10 @@ Element* addElem(Element* array, int& size)
 
 
     //asks for new element's year of discovery
-    array[size - 1].discoveryYr = inputInteger("\n\tDiscovery year: ", true);
+    array[size - 1].discoveryYr = inputInteger("\n\tDiscovery year: ", 0, 2025);
 
     //asks who discovered the element
-    strncpy_s(array[size - 1].scientist, inputString("\n\tDiscovered by:", false).c_str(), sizeof(array[size - 1].scientist) - 1);
+    strncpy_s(array[size - 1].scientist, inputString("\n\tDiscovered by:", true).c_str(), sizeof(array[size - 1].scientist) - 1);
 
     //returns newly appended array
     return array;
@@ -465,12 +469,12 @@ Element* updateElem(Element* array, int& size)
                 cout << "\n\tSymbol          : " << temp[index].symbol;
                 cout << "\n\tName            : " << temp[index].name;
                 cout << "\n\tMass            : " << temp[index].mass << "u";
-                cout << "\n\tState of matter : " << temp[index].state;
+                cout << "\n\tState of matter : ";  printState(temp[index].state);
                 cout << "\n\tGroup #         : " << temp[index].groupNum;
                 cout << "\n\tPeriod #        : " << temp[index].periodNum;
-                cout << "\n\tBlock type      : " << temp[index].blockType;
-                cout << "\n\tMelting point   : " << temp[index].meltingPt;
-                cout << "\n\tBoiling Point   : " << temp[index].boilPt;
+                cout << "\n\tBlock type      : ";  printBlockType(temp[index].blockType);
+                cout << "\n\tMelting point   : ";  printTemp(temp[index].meltingPt);
+                cout << "\n\tBoiling Point   : ";  printTemp(temp[index].boilPt);
                 cout << "\n\tDiscovery year  : " << temp[index].discoveryYr;
                 cout << "\n\tDiscovered by   : " << temp[index].scientist;
                 cout << "\n\nUpdating Element's info...";
@@ -510,7 +514,7 @@ Element* updateElem(Element* array, int& size)
                     break;
                 case 2:
                     //asks for new element's name
-                    strncpy_s(temp[index].name, inputString("\n\tName :", false).c_str(), sizeof(temp[index].name) - 1);
+                    strncpy_s(temp[index].name, inputString("\n\tName :", true).c_str(), sizeof(temp[index].name) - 1);
                     break;
                 case 3:
                     //asks for new element's mass
@@ -518,7 +522,7 @@ Element* updateElem(Element* array, int& size)
                     break;
                 case 4:
                     //asks for new element's state of matter
-                    temp[index].state = toupper(inputChar("\n\tState of matter: "));
+                    temp[index].state = toupper(inputChar("\n\tState of matter: ", 'SLG'));
                     break;
                 case 5:
                     //asks for new element's group number
@@ -530,7 +534,7 @@ Element* updateElem(Element* array, int& size)
                     break;
                 case 7:
                     //asks for new element's block type
-                    temp[index].blockType = toupper(inputChar("\n\tBlock Type: "));
+                    temp[index].blockType = toupper(inputChar("\n\tBlock Type(S-sharp, P-principal, D-diffuse, or F-fundamental): ", 'SPDF'));
                     break;
                 case 8:
                     //asks for new element's melting point
@@ -542,11 +546,11 @@ Element* updateElem(Element* array, int& size)
                     break;
                 case 10:
                     //asks for new element's year of discovery
-                    temp[index].discoveryYr = inputInteger("\n\tDiscovery year: ", true);
+                    temp[index].discoveryYr = inputInteger("\n\tDiscovery year: ", 0, 2025);
                     break;
                 case 11:
                     //asks who discovered the element
-                    strncpy_s(temp[index].scientist, inputString("\n\tDiscovered by:", false).c_str(), sizeof(temp[index].scientist) - 1);
+                    strncpy_s(temp[index].scientist, inputString("\n\tDiscovered by:", true).c_str(), sizeof(temp[index].scientist) - 1);
                     break;
                 }
 
@@ -799,12 +803,12 @@ void displayVector(vector<Element> list)
             cout << "\n\tSymbol          : " << index.symbol;
             cout << "\n\tName            : " << index.name;
             cout << "\n\tMass            : " << index.mass << "u";
-            cout << "\n\tState of matter : " << index.state;
+            cout << "\n\tState of matter : ";  printState(index.state);
             cout << "\n\tGroup #         : " << index.groupNum;
             cout << "\n\tPeriod #        : " << index.periodNum;
-            cout << "\n\tBlock type      : " << index.blockType;
-            cout << "\n\tMelting point   : " << index.meltingPt;
-            cout << "\n\tBoiling Point   : " << index.boilPt;
+            cout << "\n\tBlock type      : ";  printBlockType(index.blockType);
+            cout << "\n\tMelting point   : ";  printTemp(index.meltingPt);
+            cout << "\n\tBoiling Point   : ";  printTemp(index.boilPt);
             cout << "\n\tDiscovery year  : " << index.discoveryYr;
             cout << "\n\tDiscovered by   : " << index.scientist;
             cout << "\n\n";
@@ -836,13 +840,13 @@ vector<Element> addElemToVector(vector<Element> list)
     strncpy_s(list[list.size() - 1].symbol, inputString("\n\tSymbol :", false).c_str(), sizeof(list[list.size() - 1].symbol) - 1);
 
     //asks for new element's name
-    strncpy_s(list[list.size() - 1].name, inputString("\n\tName :", false).c_str(), sizeof(list[list.size() - 1].name) - 1);
+    strncpy_s(list[list.size() - 1].name, inputString("\n\tName :", true).c_str(), sizeof(list[list.size() - 1].name) - 1);
 
     //asks for new element's mass
     list[list.size() - 1].mass = inputDouble("\n\tMass: ", true);
 
     //asks for new element's state of matter
-    list[list.size() - 1].state = toupper(inputChar("\n\tState of matter: "));
+    list[list.size() - 1].state = toupper(inputChar("\n\tState of matter: ", 'SLG'));
 
     //asks for new element's group number
     list[list.size() - 1].groupNum = inputInteger("\n\tGroup # :", true);
@@ -851,7 +855,7 @@ vector<Element> addElemToVector(vector<Element> list)
     list[list.size() - 1].periodNum = inputInteger("\n\tPeriod # :", true);
 
     //asks for new element's block type
-    list[list.size() - 1].blockType = toupper(inputChar("\n\tBlock Type: "));
+    list[list.size() - 1].blockType = toupper(inputChar("\n\tBlock Type(S-sharp, P-principal, D-diffuse, or F-fundamental): ", 'SPDF'));
 
     //asks for new element's melting point
     list[list.size() - 1].meltingPt = inputDouble("\n\tMelting point: ");
@@ -861,10 +865,10 @@ vector<Element> addElemToVector(vector<Element> list)
 
 
     //asks for new element's year of discovery
-    list[list.size() - 1].discoveryYr = inputInteger("\n\tDiscovery year: ", true);
+    list[list.size() - 1].discoveryYr = inputInteger("\n\tDiscovery year: ", 0, 2025);
 
     //asks who discovered the element
-    strncpy_s(list[list.size() - 1].scientist, inputString("\n\tDiscovered by:", false).c_str(), sizeof(list[list.size() - 1].scientist) - 1);
+    strncpy_s(list[list.size() - 1].scientist, inputString("\n\tDiscovered by:", true).c_str(), sizeof(list[list.size() - 1].scientist) - 1);
 
     //returns newly appended array
     return list;
@@ -923,12 +927,12 @@ vector<Element> updateVectorElem(vector<Element> list)
                 cout << "\n\tSymbol          : " << temp[index].symbol;
                 cout << "\n\tName            : " << temp[index].name;
                 cout << "\n\tMass            : " << temp[index].mass << "u";
-                cout << "\n\tState of matter : " << temp[index].state;
+                cout << "\n\tState of matter : ";  printState(temp[index].state);
                 cout << "\n\tGroup #         : " << temp[index].groupNum;
                 cout << "\n\tPeriod #        : " << temp[index].periodNum;
-                cout << "\n\tBlock type      : " << temp[index].blockType;
-                cout << "\n\tMelting point   : " << temp[index].meltingPt;
-                cout << "\n\tBoiling Point   : " << temp[index].boilPt;
+                cout << "\n\tBlock type      : ";  printBlockType(temp[index].blockType);
+                cout << "\n\tMelting point   : ";  printTemp(temp[index].meltingPt);
+                cout << "\n\tBoiling Point   : ";  printTemp(temp[index].boilPt);
                 cout << "\n\tDiscovery year  : " << temp[index].discoveryYr;
                 cout << "\n\tDiscovered by   : " << temp[index].scientist;
                 cout << "\n\n\tUpdating Element's info...";
@@ -968,7 +972,7 @@ vector<Element> updateVectorElem(vector<Element> list)
                     break;
                 case 2:
                     //asks for new element's name
-                    strncpy_s(temp[index].name, inputString("\n\tName :", false).c_str(), sizeof(temp[index].name) - 1);
+                    strncpy_s(temp[index].name, inputString("\n\tName :", true).c_str(), sizeof(temp[index].name) - 1);
                     break;
                 case 3:
                     //asks for new element's mass
@@ -976,7 +980,7 @@ vector<Element> updateVectorElem(vector<Element> list)
                     break;
                 case 4:
                     //asks for new element's state of matter
-                    temp[index].state = toupper(inputChar("\n\tState of matter: "));
+                    temp[index].state = toupper(inputChar("\n\tState of matter: ", 'SLG'));
                     break;
                 case 5:
                     //asks for new element's group number
@@ -988,7 +992,7 @@ vector<Element> updateVectorElem(vector<Element> list)
                     break;
                 case 7:
                     //asks for new element's block type
-                    temp[index].blockType = toupper(inputChar("\n\tBlock Type: "));
+                    temp[index].blockType = toupper(inputChar("\n\tBlock Type(S-sharp, P-principal, D-diffuse, or F-fundamental): ", 'SPDF'));
                     break;
                 case 8:
                     //asks for new element's melting point
@@ -1000,11 +1004,11 @@ vector<Element> updateVectorElem(vector<Element> list)
                     break;
                 case 10:
                     //asks for new element's year of discovery
-                    temp[index].discoveryYr = inputInteger("\n\tDiscovery year: ", true);
+                    temp[index].discoveryYr = inputInteger("\n\tDiscovery year: ", 0, 2025);
                     break;
                 case 11:
                     //asks who discovered the element
-                    strncpy_s(temp[index].scientist, inputString("\n\tDiscovered by:", false).c_str(), sizeof(temp[index].scientist) - 1);
+                    strncpy_s(temp[index].scientist, inputString("\n\tDiscovered by:", true).c_str(), sizeof(temp[index].scientist) - 1);
                     break;
                 }
 
@@ -1032,6 +1036,7 @@ bool checkAtomNum2(vector<Element> list, short atomicNum)
 
     return state;
 }
+
 
 
 vector<Element> vectorSort(vector<Element> list)
@@ -1078,6 +1083,7 @@ int vectorBinarySearch(vector<Element> list, char* symbol)
     }
 }
 
+
 void vectorToFile(string filename, vector<Element> list)
 {
     fstream file;
@@ -1098,4 +1104,53 @@ void vectorToFile(string filename, vector<Element> list)
 
     //Confirmation code
     cout << "\n\tCONFRIMATION: Vector elements have been written onto file: " << filename << ".";
+}
+
+
+//Angel's Input/Output validation
+
+void printBlockType(char blockType)
+{
+    switch (toupper(blockType))
+    {
+    case 'S':
+        cout << "(S) sharp";
+        break;
+    case 'P':
+        cout << "(P) principal";
+        break;
+    case 'D':
+        cout << "(D) diffuse";
+        break;
+    case 'F':
+        cout << "(F) fundamental";
+        break;
+    default:
+        cout << "Unkown";
+        break;
+    }
+}
+
+void printState(char state) 
+{
+    switch (toupper(state))
+    {
+    case 'S':
+        cout << "solid";
+        break;
+    case 'L':
+        cout << "liquid";
+        break;
+    case 'G':
+        cout << "gas";
+        break;
+    default:
+        cout << "Unkown";
+        break;
+    }
+}
+
+void printTemp(float degreeCelsius) 
+{
+    cout << degreeCelsius << char(167) << "C; " << ((degreeCelsius)*9/5) + 32 << char(167) << "F; " << (degreeCelsius) + 273.15 << char(167) << "K";
 }
