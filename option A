@@ -1,13 +1,16 @@
 //change the deference style A->B into (*A).B or your own style 
-
-
+// change all the declaration of file, 
+ex: fstream file(filename, ....) 
+to: fstream file;
+    file.open();
+//you should be able to create DisplayStateType, DisplayBlockType and DisplayTemperature yourself
 
 
 
 
 void PrintElement(Element* molecule)
 {
-    cout << setw(16) << left << "\n\tAtomic #" << " : " << molecule->AtomicNumber;
+    cout << setw(16) << left << "\n\tAtomic #" << " : " << molecule->AtomicNumber; //change to (*molecule).AtomicNumber or your own style
     cout << setw(16) << left << "\n\tSymbol" << " : " << molecule->Symbol;
     cout << setw(16) << left << "\n\tName" << " : "  << molecule->Name;
     cout << setw(16) << left << "\n\tState type" << " : ";
